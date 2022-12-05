@@ -37,7 +37,7 @@ process GATK4_HAPLOTYPECALLER {
         avail_mem = task.memory.giga
     }
     """
-    gatk --java-options "-Xmx${avail_mem}g" HaplotypeCaller \\
+    gatk --java-options "-Xmx${avail_mem}g -XX:+UseSerialGC" HaplotypeCaller \\
         --input $input \\
         --output ${prefix}.vcf.gz \\
         --reference $fasta \\

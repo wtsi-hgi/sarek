@@ -32,7 +32,7 @@ process GATK4_MERGEVCFS {
         avail_mem = task.memory.giga
     }
     """
-    gatk --java-options "-Xmx${avail_mem}g" MergeVcfs \\
+    gatk --java-options "-Xmx${avail_mem}g -XX:+UseSerialGC" MergeVcfs \\
         $input_list \\
         --OUTPUT ${prefix}.vcf.gz \\
         $reference_command \\

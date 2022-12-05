@@ -42,7 +42,7 @@ process GATK4_MUTECT2 {
         avail_mem = task.memory.giga
     }
     """
-    gatk --java-options "-Xmx${avail_mem}g" Mutect2 \\
+    gatk --java-options "-Xmx${avail_mem}g -XX:+UseSerialGC" Mutect2 \\
         $inputs \\
         --output ${prefix}.vcf.gz \\
         --reference $fasta \\

@@ -29,7 +29,7 @@ process GATK4_GATHERBQSRREPORTS {
         avail_mem = task.memory.giga
     }
     """
-    gatk --java-options "-Xmx${avail_mem}g" GatherBQSRReports \\
+    gatk --java-options "-Xmx${avail_mem}g -XX:+UseSerialGC" GatherBQSRReports \\
         $input_list \\
         --output ${prefix}.table \\
         --tmp-dir . \\

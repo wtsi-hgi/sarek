@@ -35,7 +35,7 @@ process GATK4_GETPILEUPSUMMARIES {
         avail_mem = task.memory.giga
     }
     """
-    gatk --java-options "-Xmx${avail_mem}g" GetPileupSummaries \\
+    gatk --java-options "-Xmx${avail_mem}g -XX:+UseSerialGC" GetPileupSummaries \\
         --input $input \\
         --variant $variants \\
         --output ${prefix}.pileups.table \\

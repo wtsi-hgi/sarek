@@ -39,7 +39,7 @@ process GATK4_VARIANTRECALIBRATOR {
         avail_mem = task.memory.giga
     }
     """
-    gatk --java-options "-Xmx${avail_mem}g" VariantRecalibrator \\
+    gatk --java-options "-Xmx${avail_mem}g -XX:+UseSerialGC" VariantRecalibrator \\
         --variant $vcf \\
         --output ${prefix}.recal \\
         --tranches-file ${prefix}.tranches \\

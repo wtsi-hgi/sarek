@@ -29,7 +29,7 @@ process GATK4_LEARNREADORIENTATIONMODEL {
         avail_mem = task.memory.giga
     }
     """
-    gatk --java-options "-Xmx${avail_mem}g" LearnReadOrientationModel \\
+    gatk --java-options "-Xmx${avail_mem}g -XX:+UseSerialGC" LearnReadOrientationModel \\
         $input_list \\
         --output ${prefix}.tar.gz \\
         --tmp-dir . \\

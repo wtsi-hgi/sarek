@@ -33,7 +33,7 @@ process GATK4_APPLYBQSR {
         avail_mem = task.memory.giga
     }
     """
-    gatk --java-options "-Xmx${avail_mem}g" ApplyBQSR \\
+    gatk --java-options "-Xmx${avail_mem}g -XX:+UseSerialGC" ApplyBQSR \\
         --input $input \\
         --output ${prefix}.${input.getExtension()} \\
         --reference $fasta \\

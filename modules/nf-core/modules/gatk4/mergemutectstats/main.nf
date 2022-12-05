@@ -29,7 +29,7 @@ process GATK4_MERGEMUTECTSTATS {
         avail_mem = task.memory.giga
     }
     """
-    gatk --java-options "-Xmx${avail_mem}g" MergeMutectStats \\
+    gatk --java-options "-Xmx${avail_mem}g -XX:+UseSerialGC" MergeMutectStats \\
         $input_list \\
         --output ${prefix}.vcf.gz.stats \\
         --tmp-dir . \\

@@ -36,7 +36,7 @@ process GATK4_FILTERVARIANTTRANCHES {
         avail_mem = task.memory.giga
     }
     """
-    gatk --java-options "-Xmx${avail_mem}g" FilterVariantTranches \\
+    gatk --java-options "-Xmx${avail_mem}g -XX:+UseSerialGC" FilterVariantTranches \\
         --variant $vcf \\
         $resources \\
         --output ${prefix}.filtered.vcf.gz \\

@@ -38,7 +38,7 @@ process GATK4_FILTERMUTECTCALLS {
         avail_mem = task.memory.giga
     }
     """
-    gatk --java-options "-Xmx${avail_mem}g" FilterMutectCalls \\
+    gatk --java-options "-Xmx${avail_mem}g -XX:+UseSerialGC" FilterMutectCalls \\
         --variant $vcf \\
         --output ${prefix}.vcf.gz \\
         --reference $fasta \\

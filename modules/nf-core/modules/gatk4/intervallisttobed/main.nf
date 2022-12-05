@@ -28,7 +28,7 @@ process GATK4_INTERVALLISTTOBED {
         avail_mem = task.memory.giga
     }
     """
-    gatk --java-options "-Xmx${avail_mem}g" IntervalListToBed \\
+    gatk --java-options "-Xmx${avail_mem}g -XX:+UseSerialGC" IntervalListToBed \\
         --INPUT $intervals \\
         --OUTPUT ${prefix}.bed \\
         --TMP_DIR . \\

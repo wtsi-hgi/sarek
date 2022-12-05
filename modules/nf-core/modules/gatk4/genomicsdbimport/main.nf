@@ -52,7 +52,7 @@ process GATK4_GENOMICSDBIMPORT {
         avail_mem = task.memory.giga
     }
     """
-    gatk --java-options "-Xmx${avail_mem}g" GenomicsDBImport \\
+    gatk --java-options "-Xmx${avail_mem}g -XX:+UseSerialGC" GenomicsDBImport \\
         $input_command \\
         $genomicsdb_command \\
         $interval_command \\

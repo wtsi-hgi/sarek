@@ -31,7 +31,7 @@ process GATK4_APPLYBQSR_SPARK {
         avail_mem = task.memory.giga
     }
     """
-    gatk --java-options "-Xmx${avail_mem}g" ApplyBQSRSpark \\
+    gatk --java-options "-Xmx${avail_mem}g -XX:+UseSerialGC" ApplyBQSRSpark \\
         --input $input \\
         --output ${prefix}.${input.getExtension()} \\
         --reference $fasta \\

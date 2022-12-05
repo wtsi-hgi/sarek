@@ -37,7 +37,7 @@ process GATK4_GENOTYPEGVCFS {
         avail_mem = task.memory.giga
     }
     """
-    gatk --java-options "-Xmx${avail_mem}g" GenotypeGVCFs \\
+    gatk --java-options "-Xmx${avail_mem}g -XX:+UseSerialGC" GenotypeGVCFs \\
         --variant $gvcf_command \\
         --output ${prefix}.vcf.gz \\
         --reference $fasta \\

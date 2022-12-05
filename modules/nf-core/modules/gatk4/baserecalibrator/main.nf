@@ -35,7 +35,7 @@ process GATK4_BASERECALIBRATOR {
         avail_mem = task.memory.giga
     }
     """
-    gatk --java-options "-Xmx${avail_mem}g" BaseRecalibrator  \\
+    gatk --java-options "-Xmx${avail_mem}g -XX:+UseSerialGC" BaseRecalibrator  \\
         --input $input \\
         --output ${prefix}.table \\
         --reference $fasta \\

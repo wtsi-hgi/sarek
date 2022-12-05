@@ -31,7 +31,7 @@ process GATK4_MARKDUPLICATES {
         avail_mem = task.memory.giga
     }
     """
-    gatk --java-options "-Xmx${avail_mem}g" MarkDuplicates \\
+    gatk --java-options "-Xmx${avail_mem}g -XX:+UseSerialGC" MarkDuplicates \\
         $input_list \\
         --OUTPUT ${prefix}.bam \\
         --METRICS_FILE ${prefix}.metrics \\
