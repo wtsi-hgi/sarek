@@ -1,6 +1,6 @@
 process GATK4_GENOMICSDBIMPORT {
     tag "$meta.id"
-    label 'process_low'
+    //label 'process_low'
 
     conda (params.enable_conda ? "bioconda::gatk4=4.2.6.1" : null)
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
@@ -56,6 +56,7 @@ process GATK4_GENOMICSDBIMPORT {
         $input_command \\
         $genomicsdb_command \\
         $interval_command \\
+        --batch-size 5 \\
         --tmp-dir . \\
         $args
 
