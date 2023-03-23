@@ -56,12 +56,12 @@ process GATK4_GENOMICSDBIMPORT {
     trap 'rm -rf "\$WORKSPACE"' EXIT
 
     gatk --java-options "-Xmx8g -XX:+UseSerialGC" GenomicsDBImport \\
-        \$input_command \\
+        $input_command \\
         --genomicsdb-workspace-path \${WORKSPACE} \\
-        \$interval_command \\
+        $interval_command \\
         --batch-size 50 \\
         --tmp-dir \${WORKSPACE} \\
-        \$args
+        $args
 
     cp -R \${WORKSPACE}/ ./${wspace}
 
