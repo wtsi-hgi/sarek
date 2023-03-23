@@ -60,7 +60,6 @@ process GATK4_GENOMICSDBIMPORT {
         --genomicsdb-workspace-path \${WORKSPACE} \\
         $interval_command \\
         --batch-size 50 \\
-        --tmp-dir \${WORKSPACE} \\
         $args
 
     cp -R \${WORKSPACE}/ ./${wspace}
