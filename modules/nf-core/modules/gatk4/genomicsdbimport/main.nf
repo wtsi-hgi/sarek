@@ -52,18 +52,18 @@ process GATK4_GENOMICSDBIMPORT {
         avail_mem = task.memory.giga
     }
     """
-    declare WORKSPACE="$(TMPDIR="/tmp" mktemp -du)"
-    trap 'rm -rf "$WORKSPACE"' EXIT
+    declare WORKSPACE="\$(TMPDIR="/tmp" mktemp -du)"
+    trap 'rm -rf "\$WORKSPACE"' EXIT
 
-    gatk --java-options "-Xmx${avail_mem}g -XX:+UseSerialGC" GenomicsDBImport \\
-        $input_command \\
-        --genomicsdb-workspace-path ${WORKSPACE} \\
-        $interval_command \\
+    gatk --java-options "-Xmx8g -XX:+UseSerialGC" GenomicsDBImport \\
+        \$input_command \\
+        --genomicsdb-workspace-path \${WORKSPACE} \\
+        \$interval_command \\
         --batch-size 50 \\
-        --tmp-dir ${WORKSPACE} \\
-        $args
+        --tmp-dir \${WORKSPACE} \\
+        \$args
 
-    cp -R ${WORKSPACE}/ ./${wspace}
+    cp -R \${WORKSPACE}/ ./${wspace}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
