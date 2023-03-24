@@ -60,9 +60,11 @@ process GATK4_GENOMICSDBIMPORT {
         --genomicsdb-workspace-path \${WORKSPACE} \\
         $interval_command \\
         --batch-size 50 \\
+        --reader-threads 1 \\
+        -ip 500 \\
         $args
 
-    cp -R \${WORKSPACE}/ ./${wspace}
+    tar cf "${wspace}" -C "\$WORKSPACE" .
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

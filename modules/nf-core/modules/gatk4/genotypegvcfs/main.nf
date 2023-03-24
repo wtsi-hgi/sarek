@@ -37,8 +37,14 @@ process GATK4_GENOTYPEGVCFS {
         avail_mem = task.memory.giga
     }
     """
+
+    declare WORKSPACE="$(TMPDIR="/tmp" mktemp -d)"
+    trap 'rm -rf "$WORKSPACE"' EXIT
+    tar xf "${gvcf}" -C "\$WORKSPACE"
+
+
     gatk --java-options "-Xmx${avail_mem}g -XX:+UseSerialGC" GenotypeGVCFs \\
-        --variant $gvcf_command \\
+        --variant \$WORKSPACE \\
         --output ${prefix}.vcf.gz \\
         --reference $fasta \\
         $interval_command \\
