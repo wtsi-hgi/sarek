@@ -64,7 +64,7 @@ process GATK4_GENOMICSDBIMPORT {
         -ip 500 \\
         $args
 
-    tar cf "${wspace}" -C "\$WORKSPACE" .
+    tar cf "${prefix}" -C "\$WORKSPACE" .
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
