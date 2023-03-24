@@ -38,8 +38,8 @@ process GATK4_GENOTYPEGVCFS {
     }
     """
 
-    declare WORKSPACE="$(TMPDIR="/tmp" mktemp -d)"
-    trap 'rm -rf "$WORKSPACE"' EXIT
+    declare WORKSPACE="\$(TMPDIR="/tmp" mktemp -d)"
+    trap 'rm -rf "\$WORKSPACE"' EXIT
     tar xf "${gvcf}" -C "\$WORKSPACE"
 
 
