@@ -44,7 +44,7 @@ process GATK4_GENOTYPEGVCFS {
 
 
     gatk --java-options "-Xmx${avail_mem}g -XX:+UseSerialGC" GenotypeGVCFs \\
-        --variant \$WORKSPACE \\
+        --variant gendb://\$WORKSPACE \\
         --output ${prefix}.vcf.gz \\
         --reference $fasta \\
         $interval_command \\
