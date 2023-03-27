@@ -115,6 +115,8 @@ process VCFTOOLS {
         $bed_arg \\
         $diff_variant_arg
 
+    bash -c 'exit 134' || echo "Completed TsTv-by-count"
+
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         vcftools: \$(echo \$(vcftools --version 2>&1) | sed 's/^.*VCFtools (//;s/).*//')
