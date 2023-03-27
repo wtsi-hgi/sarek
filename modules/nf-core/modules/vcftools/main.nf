@@ -113,9 +113,8 @@ process VCFTOOLS {
         --out $prefix \\
         ${args_list.join(' ')} \\
         $bed_arg \\
-        $diff_variant_arg
+        $diff_variant_arg ||:
 
-    bash -c 'exit 134' || echo "Completed TsTv-by-count"
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
