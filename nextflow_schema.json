@@ -578,7 +578,7 @@
                     "fa_icon": "fas fa-file",
                     "description": "Path to FASTA dictionary file.",
                     "help_text": "If you use AWS iGenomes, this has already been set for you appropriately.\n\n> **NB** If none provided, will be generated automatically from the FASTA reference. Combine with `--save_reference` to save for future runs.",
-                    "hidden": true
+                    "hidden": false
                 },
                 "dragmap": {
                     "type": "string",
