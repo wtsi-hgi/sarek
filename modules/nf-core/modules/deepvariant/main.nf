@@ -1,6 +1,6 @@
 process DEEPVARIANT {
     tag "$meta.id"
-    label 'process_medium'
+    label 'process_low'
 
 
     if (params.enable_conda) {
