@@ -223,7 +223,8 @@
             "title": "Variant Calling",
             "type": "object",
             "description": "Configure variant calling tools",
-            "default": "",
+            "default": true,
+	    "enum": [true, false],
             "fa_icon": "fas fa-toolbox",
             "properties": {
                 "only_paired_variant_calling": {
