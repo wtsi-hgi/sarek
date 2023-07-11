@@ -223,8 +223,7 @@
             "title": "Variant Calling",
             "type": "object",
             "description": "Configure variant calling tools",
-            "default": true,
-	    "enum": [true, false],
+            "default": "",
             "fa_icon": "fas fa-toolbox",
             "properties": {
                 "only_paired_variant_calling": {
@@ -236,6 +235,7 @@
                 "joint_germline": {
                     "type": "boolean",
 		    "default": true,
+		    "emun": [true, false],
                     "fa_icon": "fas fa-toolbox",
                     "description": "Turn on the joint germline variant calling for GATK haplotypecaller",
                     "help_text": "Uses all normal germline samples (as designated by `status` in the input csv) in the joint germline variant calling process."
