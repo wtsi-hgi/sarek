@@ -573,13 +573,6 @@
                     "fa_icon": "fas fa-copy",
                     "description": "label string for VariantRecalibration (haplotypecaller joint variant calling)"
                 },
-                "dict": {
-                    "type": "string",
-                    "fa_icon": "fas fa-file",
-                    "description": "Path to FASTA dictionary file.",
-                    "help_text": "If you use AWS iGenomes, this has already been set for you appropriately.\n\n> **NB** If none provided, will be generated automatically from the FASTA reference. Combine with `--save_reference` to save for future runs.",
-                    "hidden": false
-                },
                 "dragmap": {
                     "type": "string",
                     "fa_icon": "fas fa-copy",
@@ -602,6 +595,12 @@
                     "help_text": "If you use AWS iGenomes, this has already been set for you appropriately.\n\n> **NB** If none provided, will be generated automatically from the FASTA reference. Combine with `--save_reference` to save for future runs.",
                     "description": "Path to FASTA reference index."
                 },
+                "dict": {
+                    "type": "string",
+                    "fa_icon": "fas fa-file",
+                    "description": "Path to FASTA dictionary file.",
+                    "help_text": "If you use AWS iGenomes, this has already been set for you appropriately.\n\n> **NB** If none provided, will be generated automatically from the FASTA reference. Combine with `--save_reference` to save for future runs.",
+                },		
                 "germline_resource": {
                     "type": "string",
                     "fa_icon": "fas fa-file",
