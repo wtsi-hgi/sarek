@@ -14,7 +14,7 @@
             "properties": {
                 "step": {
                     "type": "string",
-                    "default": "mapping",
+                    "default": "variant_calling",
                     "fa_icon": "fas fa-play",
                     "description": "Starting step",
                     "help_text": "The pipeline starts from this step and then runs through the possible subsequent steps.",
@@ -234,6 +234,7 @@
                 },
                 "joint_germline": {
                     "type": "boolean",
+		    "default": true,
                     "fa_icon": "fas fa-toolbox",
                     "description": "Turn on the joint germline variant calling for GATK haplotypecaller",
                     "help_text": "Uses all normal germline samples (as designated by `status` in the input csv) in the joint germline variant calling process."
