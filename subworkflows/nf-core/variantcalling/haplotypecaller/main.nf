@@ -100,16 +100,16 @@ workflow RUN_HAPLOTYPECALLER {
             MERGE_HAPLOTYPECALLER.out.tbi,
             haplotypecaller_tbi_branch.no_intervals)
 
-        SINGLE_SAMPLE(haplotypecaller_vcf.join(haplotypecaller_tbi),
-                    fasta,
-                    fasta_fai,
-                    dict,
-                    intervals_bed_combined,
-                    known_sites_indels.concat(known_sites_snps).flatten().unique().collect(),
-                    known_sites_indels_tbi.concat(known_sites_snps_tbi).flatten().unique().collect())
+//        SINGLE_SAMPLE(haplotypecaller_vcf.join(haplotypecaller_tbi),
+//                    fasta,
+//                    fasta_fai,
+//                    dict,
+//                    intervals_bed_combined,
+//                    known_sites_indels.concat(known_sites_snps).flatten().unique().collect(),
+//                    known_sites_indels_tbi.concat(known_sites_snps_tbi).flatten().unique().collect())
 
-        filtered_vcf = SINGLE_SAMPLE.out.filtered_vcf.map{ meta, vcf-> [[patient:meta.patient, sample:meta.sample, status:meta.status, sex:meta.sex, id:meta.sample, num_intervals:meta.num_intervals, variantcaller:"haplotypecaller"], vcf]}
-        ch_versions = ch_versions.mix(  SINGLE_SAMPLE.out.versions,
+//        filtered_vcf = SINGLE_SAMPLE.out.filtered_vcf.map{ meta, vcf-> [[patient:meta.patient, sample:meta.sample, status:meta.status, sex:meta.sex, id:meta.sample, num_intervals:meta.num_intervals, variantcaller:"haplotypecaller"], vcf]}
+        ch_versions = ch_versions.mix(  //SINGLE_SAMPLE.out.versions,
                                         HAPLOTYPECALLER.out.versions,
                                         MERGE_HAPLOTYPECALLER.out.versions)
     // }
