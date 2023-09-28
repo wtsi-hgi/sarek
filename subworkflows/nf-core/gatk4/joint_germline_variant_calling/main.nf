@@ -169,22 +169,22 @@ workflow GATK_JOINT_GERMLINE_VARIANT_CALLING {
                         fasta,
                         fai,
                         dict )
+    vqsr_snp_vcf = GATK4_APPLYVQSR_SNP.out.vcf
 
-    GATK4_APPLYVQSR_INDEL(vqsr_input_indel,
+    GATK4_APPLYVQSR_INDEL(vqsr_snp_vcf,
                         fasta,
                         fai,
                         dict )
 
-    vqsr_snp_vcf = GATK4_APPLYVQSR_SNP.out.vcf
     vqsr_indel_vcf = GATK4_APPLYVQSR_INDEL.out.vcf
 
     //
     //Merge VQSR outputs into final VCF
     //
-    MERGE_VQSR(
-        vqsr_snp_vcf.mix(vqsr_indel_vcf).groupTuple(),
-        dict
-    )
+    //MERGE_VQSR(
+    //    vqsr_snp_vcf.mix(vqsr_indel_vcf).groupTuple(),
+    //    dict
+    //)
 
     ch_versions = ch_versions.mix(GATK4_GENOMICSDBIMPORT.out.versions)
     ch_versions = ch_versions.mix(GATK4_GENOTYPEGVCFS.out.versions)
@@ -195,6 +195,6 @@ workflow GATK_JOINT_GERMLINE_VARIANT_CALLING {
 
     emit:
     versions       = ch_versions                                                                                            // channel: [ versions.yml ]
-    genotype_vcf   = Channel.empty().mix( vcfs_sorted_input_no_intervals, MERGE_GENOTYPEGVCFS.out.vcf, MERGE_VQSR.out.vcf)  // channel: [ val(meta), [ vcf ] ]
-    genotype_index = Channel.empty().mix( TABIX.out.tbi, MERGE_GENOTYPEGVCFS.out.tbi, MERGE_VQSR.out.tbi)                    // channel: [ val(meta), [ tbi ] ]
+    genotype_vcf   = Channel.empty().mix( vcfs_sorted_input_no_intervals, MERGE_GENOTYPEGVCFS.out.vcf, GATK4_APPLYVQSR_INDEL.out.vcf)  // channel: [ val(meta), [ vcf ] ]
+    genotype_index = Channel.empty().mix( TABIX.out.tbi, MERGE_GENOTYPEGVCFS.out.tbi, GATK4_APPLYVQSR_INDEL.out.tbi)                    // channel: [ val(meta), [ tbi ] ]
 }
