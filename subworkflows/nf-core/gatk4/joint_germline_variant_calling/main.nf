@@ -154,8 +154,11 @@ workflow GATK_JOINT_GERMLINE_VARIANT_CALLING {
                         fai,
                         dict )
 
+    vqsr_snp_vcf = Channel.empty().mix(
+        GATK4_APPLYVQSR_SNP.out.vcf.join(GATK4_APPLYVQSR_SNP.out.tbi),
+        vcfs_sorted_input_no_intervals.join(TABIX.out.tbi)
+    )
 
-    vqsr_snp_vcf = GATK4_APPLYVQSR_SNP.out.vcf
 
     //Join results of variant recalibration into a single channel tuple
     //Rework meta for variantscalled.csv and annotation tools
