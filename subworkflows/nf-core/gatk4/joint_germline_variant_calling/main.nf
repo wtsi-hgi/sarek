@@ -149,9 +149,17 @@ workflow GATK_JOINT_GERMLINE_VARIANT_CALLING {
                                             [new_meta, vcf, tbi, recal, index, tranche]
                                         }
 
+    GATK4_APPLYVQSR_SNP(vqsr_input_snp,
+                        fasta,
+                        fai,
+                        dict )
+
+
+    vqsr_snp_vcf = GATK4_APPLYVQSR_SNP.out.vcf
+
     //Join results of variant recalibration into a single channel tuple
     //Rework meta for variantscalled.csv and annotation tools
-    vqsr_input_indel = vqsr_input.join( VARIANTRECALIBRATOR_INDEL.out.recal).join(
+    vqsr_input_indel = vqsr_snp_vcf.join( VARIANTRECALIBRATOR_INDEL.out.recal).join(
                                         VARIANTRECALIBRATOR_INDEL.out.idx).join(
                                         VARIANTRECALIBRATOR_INDEL.out.tranches).map{ meta, vcf, tbi, recal, index, tranche ->
 
@@ -165,10 +173,6 @@ workflow GATK_JOINT_GERMLINE_VARIANT_CALLING {
                                             [new_meta, vcf, tbi, recal, index, tranche]
                                         }
 
-    GATK4_APPLYVQSR_SNP(vqsr_input_snp,
-                        fasta,
-                        fai,
-                        dict )
 
     GATK4_APPLYVQSR_INDEL(vqsr_input_indel,
                         fasta,
