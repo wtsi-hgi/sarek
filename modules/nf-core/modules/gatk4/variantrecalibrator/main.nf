@@ -45,6 +45,7 @@ process GATK4_VARIANTRECALIBRATOR {
         --tranches-file ${prefix}.tranches \\
         $reference_command \\
         --tmp-dir . \\
+        --rscript-file output.plots.R \\
         $labels_command \\
         $args
 
