@@ -22,6 +22,7 @@ workflow RUN_HAPLOTYPECALLER {
 
     ch_versions = Channel.empty()
     merged_vcf = Channel.empty()
+    filtered_vcf = Channel.empty()
 
     HAPLOTYPECALLER(
         cram,
@@ -118,4 +119,5 @@ workflow RUN_HAPLOTYPECALLER {
     emit:
     versions = ch_versions
     merged_vcf
+    filtered_vcf
 }
