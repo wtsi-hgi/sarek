@@ -106,7 +106,7 @@ workflow RUN_HAPLOTYPECALLER {
 //                    dict,
 //                    intervals_bed_combined,
 //                    known_sites_indels.concat(known_sites_snps).flatten().unique().collect(),
-                    known_sites_indels_tbi.concat(known_sites_snps_tbi).flatten().unique().collect())
+//                    known_sites_indels_tbi.concat(known_sites_snps_tbi).flatten().unique().collect())
 
 //        filtered_vcf = SINGLE_SAMPLE.out.filtered_vcf.map{ meta, vcf-> [[patient:meta.patient, sample:meta.sample, status:meta.status, sex:meta.sex, id:meta.sample, num_intervals:meta.num_intervals, variantcaller:"haplotypecaller"], vcf]}
         merged_vcf = MERGE_HAPLOTYPECALLER.out.vcf.map{ meta, vcf-> [[patient:meta.patient, sample:meta.sample, status:meta.status, sex:meta.sex, id:meta.sample, num_intervals:meta.num_intervals, variantcaller:"haplotypecaller"], vcf]}
