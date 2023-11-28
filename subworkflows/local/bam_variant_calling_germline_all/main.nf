@@ -167,6 +167,32 @@ workflow BAM_VARIANT_CALLING_GERMLINE_ALL {
         }
     }
 
+    // HAPLOTYPECALLER [variant calling step only]
+    if (tools.split(',').contains('haplotypecaller_vc')) {
+    	if (! joint_germline) {
+    		error("params.joint_germline must be true when using haplotypecaller_vc")
+    	}
+
+    	BAM_VARIANT_CALLING_HAPLOTYPECALLER(
+            cram,
+            fasta,
+            fasta_fai,
+            dict,
+            dbsnp,
+            dbsnp_tbi,
+            dbsnp_vqsr,
+            intervals
+        )
+
+        vcf_haplotypecaller = BAM_VARIANT_CALLING_HAPLOTYPECALLER.out.vcf
+        versions = versions.mix(BAM_VARIANT_CALLING_HAPLOTYPECALLER.out.versions)
+    }
+
+    // HAPLOTYPECALLER [joint calling step only]
+    if (tools.split(',').contains('haplotypecaller_gc')) {
+
+    }
+
     // MANTA
     if (tools.split(',').contains('manta')) {
         BAM_VARIANT_CALLING_GERMLINE_MANTA (

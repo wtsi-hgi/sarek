@@ -259,7 +259,7 @@ if (!params.dbsnp && !params.known_indels) {
         log.warn "If GATK's Haplotypecaller or Sentieon's Haplotyper is specified, without `--dbsnp` or `--known_indels no filtering will be done. For filtering, please provide at least one of `--dbsnp` or `--known_indels`.\nFor more information see FilterVariantTranches (single-sample, default): https://gatk.broadinstitute.org/hc/en-us/articles/5358928898971-FilterVariantTranches\nFor more information see VariantRecalibration (--joint_germline): https://gatk.broadinstitute.org/hc/en-us/articles/5358906115227-VariantRecalibrator\nFor more information on GATK Best practice germline variant calling: https://gatk.broadinstitute.org/hc/en-us/articles/360035535932-Germline-short-variant-discovery-SNPs-Indels-"
     }
 }
-if (params.joint_germline && (!params.tools || !(params.tools.split(',').contains('haplotypecaller') || params.tools.split(',').contains('sentieon_haplotyper')))) {
+if (params.joint_germline && (!params.tools || !(params.tools.split(',').any{ it.startsWith('haplotypecaller') } || params.tools.split(',').contains('sentieon_haplotyper')))) {
     error("The GATK's Haplotypecaller or Sentieon's Haplotyper should be specified as one of the tools when doing joint germline variant calling.) ")
 }
 
