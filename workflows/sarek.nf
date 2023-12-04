@@ -165,7 +165,8 @@ input_sample = ch_from_samplesheet
             } else if (vcf) {
                 meta = meta + [id: meta.sample, data_type: 'vcf', variantcaller: variantcaller ?: '']
 
-                if (params.step == 'annotate') return [ meta - meta.subMap('lane'), vcf ]
+                if (params.step == 'joint_calling') return [ meta - meta.subMap('lane'), vcf ]
+				else if (params.step == 'annotate') return [ meta - meta.subMap('lane'), vcf ]
                 else {
                     error("Samplesheet contains vcf files but step is `$params.step`. Please check your samplesheet or adjust the step parameter.\nhttps://nf-co.re/sarek/usage#input-samplesheet-configurations")
                 }
@@ -1077,6 +1078,7 @@ workflow SAREK {
     if (params.tools) {
 
         if (params.step == 'annotate') cram_variant_calling = Channel.empty()
+        if (params.step == 'joint_calling') cram_variant_calling = Channel.empty()
 
         //
         // Logic to separate germline samples, tumor samples with no matched normal, and combine tumor-normal pairs
@@ -1138,6 +1140,8 @@ workflow SAREK {
 
                 [ meta, normal[2], normal[3], tumor[2], tumor[3] ]
             }
+
+        if (params.step == 'joint_calling') cram_variant_calling_status_normal = input_sample
 
         // GERMLINE VARIANT CALLING
         BAM_VARIANT_CALLING_GERMLINE_ALL(

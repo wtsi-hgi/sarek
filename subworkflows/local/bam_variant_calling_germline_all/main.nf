@@ -189,8 +189,34 @@ workflow BAM_VARIANT_CALLING_GERMLINE_ALL {
     }
 
     // HAPLOTYPECALLER [joint calling step only]
-    if (tools.split(',').contains('haplotypecaller_gc')) {
+    if (tools.split(',').contains('haplotypecaller_jc')) {
+		if (! joint_germline) {
+    		error("params.joint_germline must be true when using haplotypecaller_jc")
+    	}
 
+    	gvcf_tbi_intervals = cram
+    		.map{ meta, gvcf -> [ meta, gvcf, gvcf + '.tbi' ] }
+    		.combine(intervals)
+    		.map{ meta, gvcf, tbi, intervals, num_intervals -> [ meta + [ interval_name:intervals.simpleName, num_intervals:num_intervals ], gvcf, tbi, intervals ] }
+
+    	BAM_JOINT_CALLING_GERMLINE_GATK(
+			gvcf_tbi_intervals,
+			fasta,
+			fasta_fai,
+			dict,
+			dbsnp,
+			dbsnp_tbi,
+			dbsnp_vqsr,
+			known_sites_indels,
+			known_sites_indels_tbi,
+			known_indels_vqsr,
+			known_sites_snps,
+			known_sites_snps_tbi,
+			known_snps_vqsr
+		)
+
+		vcf_haplotypecaller = BAM_JOINT_CALLING_GERMLINE_GATK.out.genotype_vcf
+		versions = versions.mix(BAM_JOINT_CALLING_GERMLINE_GATK.out.versions)
     }
 
     // MANTA
