@@ -28,11 +28,12 @@ process CREATE_INTERVALS_BED {
                 # no runtime estimate in this row, assume default value
                 t = (\$3 - \$2) / ${params.nucleotides_per_second}
             }
-            if (name == "" || (chunk > 600 && (chunk + t) > longest * 1.05) || \$1 != chr) {
+            if (name == "" || (chunk > 600 && (chunk + t) > longest * 1.00) || \$1 != chr) {
                 # start a new chunk
                 name = sprintf("%s_%d-%d.bed", \$1, \$2+1, \$3)
                 chunk = 0
                 longest = 0
+                chr = \$1
             }
             if (t > longest)
                 longest = t
