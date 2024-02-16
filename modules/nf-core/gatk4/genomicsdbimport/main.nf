@@ -1,6 +1,6 @@
 process GATK4_GENOMICSDBIMPORT {
     tag "$meta.id"
-    label 'process_medium'
+    \\label 'process_medium'
 
     conda "bioconda::gatk4=4.4.0.0"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
@@ -53,13 +53,18 @@ process GATK4_GENOMICSDBIMPORT {
         avail_mem = (task.memory.mega*0.8).intValue()
     }
     """
-    gatk --java-options "-Xmx${avail_mem}M -XX:-UsePerfData" \\
+    declare WORKSPACE="\$(TMPDIR="/tmp" mktemp -du)"
+    trap 'rm -rf "\$WORKSPACE"' EXIT
+
+    gatk --java-options "-Xmx${avail_mem}M -XX:+UseSerialGC -XX:-UsePerfData" \\
         GenomicsDBImport \\
         $input_command \\
         $genomicsdb_command \\
         $interval_command \\
-        --tmp-dir . \\
+        --tmp-dir "\$WORKSPACE" \\
         $args
+
+    tar cf "${prefix}" -C "\$WORKSPACE" .
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

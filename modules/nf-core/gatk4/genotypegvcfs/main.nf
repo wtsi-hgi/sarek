@@ -1,6 +1,6 @@
 process GATK4_GENOTYPEGVCFS {
     tag "$meta.id"
-    label 'process_high'
+    \\label 'process_high'
 
     conda "bioconda::gatk4=4.4.0.0"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
@@ -37,9 +37,12 @@ process GATK4_GENOTYPEGVCFS {
         avail_mem = (task.memory.mega*0.8).intValue()
     }
     """
-    gatk --java-options "-Xmx${avail_mem}M -XX:-UsePerfData" \\
+    declare WORKSPACE="\$(TMPDIR="/tmp" mktemp -d)"
+    trap 'rm -rf "\$WORKSPACE"' EXIT
+    tar xf "${gvcf}" -C "\$WORKSPACE"
+    gatk --java-options "-Xmx${avail_mem}M -XX:+UseSerialGC -XX:-UsePerfData" \\
         GenotypeGVCFs \\
-        --variant $gvcf_command \\
+        --variant gendb://\$WORKSPACE \\
         --output ${prefix}.vcf.gz \\
         --reference $fasta \\
         $interval_command \\
