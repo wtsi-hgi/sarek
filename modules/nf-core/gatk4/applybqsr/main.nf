@@ -33,7 +33,7 @@ process GATK4_APPLYBQSR {
         avail_mem = (task.memory.mega*0.8).intValue()
     }
     """
-    gatk --java-options "-Xmx${avail_mem}M -XX:-UsePerfData" \\
+    gatk --java-options "-Xmx${avail_mem}M -XX:-UsePerfData -XX:+UseSerialGC" \\
         ApplyBQSR \\
         --input $input \\
         --output ${prefix}.${input.getExtension()} \\
