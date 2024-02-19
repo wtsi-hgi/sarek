@@ -24,6 +24,7 @@
                         "prepare_recalibration",
                         "recalibrate",
                         "variant_calling",
+                        "joint_calling",
                         "annotate"
                     ]
                 },
