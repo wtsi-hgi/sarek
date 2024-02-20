@@ -29,19 +29,22 @@ process GATK4_GENOMICSDBIMPORT {
     // settings for running default create gendb mode
     input_command = input_map ? "--sample-name-map ${vcf[0]}" : vcf.collect(){"--variant $it"}.join(' ')
 
-    genomicsdb_command = "--genomicsdb-workspace-path ${prefix}"
+    //genomicsdb_command = "--genomicsdb-workspace-path ${prefix}"
+    genomicsdb_command = "--genomicsdb-workspace-path"
     interval_command = interval_file ? "--intervals ${interval_file}" : "--intervals ${interval_value}"
     updated_db = ""
 
     // settings changed for running get intervals list mode if run_intlist is true
     if (run_intlist) {
-        genomicsdb_command = "--genomicsdb-update-workspace-path ${wspace}"
+        //genomicsdb_command = "--genomicsdb-update-workspace-path ${wspace}"
+        genomicsdb_command = "--genomicsdb-update-workspace-path"
         interval_command = "--output-interval-list-to-file ${prefix}.interval_list"
     }
 
     // settings changed for running update gendb mode. input_command same as default, update_db forces module to emit the updated gendb
     if (run_updatewspace) {
-        genomicsdb_command = "--genomicsdb-update-workspace-path ${wspace}"
+        //genomicsdb_command = "--genomicsdb-update-workspace-path ${wspace}"
+        genomicsdb_command = "--genomicsdb-update-workspace-path"
         interval_command = ''
         updated_db = "${wspace}"
     }
@@ -59,7 +62,7 @@ process GATK4_GENOMICSDBIMPORT {
     gatk --java-options "-Xmx${avail_mem}M -XX:+UseSerialGC -XX:-UsePerfData" \\
         GenomicsDBImport \\
         $input_command \\
-        $genomicsdb_command \\
+        $genomicsdb_command \$WORKSPACE \\
         $interval_command \\
         $args
 
