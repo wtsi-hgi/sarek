@@ -61,7 +61,6 @@ process GATK4_GENOMICSDBIMPORT {
         $input_command \\
         $genomicsdb_command \\
         $interval_command \\
-        --tmp-dir "\$WORKSPACE" \\
         $args
 
     tar cf "${prefix}" -C "\$WORKSPACE" .

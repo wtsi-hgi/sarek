@@ -47,7 +47,6 @@ process GATK4_GENOTYPEGVCFS {
         --reference $fasta \\
         $interval_command \\
         $dbsnp_command \\
-        --tmp-dir . \\
         $args
 
     cat <<-END_VERSIONS > versions.yml
