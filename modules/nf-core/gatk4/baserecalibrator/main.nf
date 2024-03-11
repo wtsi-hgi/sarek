@@ -35,7 +35,7 @@ process GATK4_BASERECALIBRATOR {
         avail_mem = (task.memory.mega*0.8).intValue()
     }
     """
-    gatk --java-options "-Xmx${avail_mem}M -XX:-UsePerfData" \\
+    gatk --java-options "-Xmx${avail_mem}M -XX:-UsePerfData -XX:+UseSerialGC" \\
         BaseRecalibrator  \\
         --input $input \\
         --output ${prefix}.table \\

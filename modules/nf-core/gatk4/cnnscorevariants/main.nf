@@ -40,7 +40,7 @@ process GATK4_CNNSCOREVARIANTS {
         avail_mem = (task.memory.mega*0.8).intValue()
     }
     """
-    gatk --java-options "-Xmx${avail_mem}M -XX:-UsePerfData" \\
+    gatk --java-options "-Xmx${avail_mem}M -XX:-UsePerfData -XX:+UseSerialGC" \\
         CNNScoreVariants \\
         --variant $vcf \\
         --output ${prefix}.cnn.vcf.gz \\
