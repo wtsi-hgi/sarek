@@ -45,7 +45,7 @@ workflow BAM_JOINT_CALLING_GERMLINE_GATK {
         }
 
     // Convert all sample vcfs into a genomicsdb workspace using genomicsdbimport
-    GATK4_GENOMICSDBIMPORT(gendb_input, false, false, false)
+    GATK4_GENOMICSDBIMPORT(gendb_input, false, false, true)
 
     genotype_input = GATK4_GENOMICSDBIMPORT.out.genomicsdb.map{ meta, genomicsdb -> [ meta, genomicsdb, [], [], [] ] }
 
