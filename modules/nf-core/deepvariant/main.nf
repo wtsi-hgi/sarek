@@ -1,6 +1,6 @@
 process DEEPVARIANT {
     tag "$meta.id"
-    label 'process_high'
+    label 'process_low'
 
     container "nf-core/deepvariant:1.5.0"
 
