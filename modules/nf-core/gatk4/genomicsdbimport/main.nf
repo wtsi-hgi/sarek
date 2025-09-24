@@ -58,7 +58,8 @@ process GATK4_GENOMICSDBIMPORT {
         avail_mem = (task.memory.mega*0.8).intValue()
     }
     """
-    declare WORKSPACE="\$(TMPDIR="/tmp" mktemp -du)"
+    #declare WORKSPACE="\$(TMPDIR="/tmp" mktemp -du)"
+    declare WORKSPACE="\$(TMPDIR="\$MY_TMPDIR" mktemp -du)"
     trap 'rm -rf "\$WORKSPACE"' EXIT
 
     gatk --java-options "-Xmx${avail_mem}M -XX:+UseSerialGC -XX:-UsePerfData" \\
