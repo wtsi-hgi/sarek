@@ -37,7 +37,8 @@ process GATK4_GENOTYPEGVCFS {
         avail_mem = (task.memory.mega*0.8).intValue()
     }
     """
-    declare WORKSPACE="\$(TMPDIR="/tmp" mktemp -d)"
+    #declare WORKSPACE="\$(TMPDIR="/tmp" mktemp -d)"
+    declare WORKSPACE="\$(TMPDIR="\$MY_TMPDIR" mktemp -d)"
     trap 'rm -rf "\$WORKSPACE"' EXIT
     tar xf "${gvcf}" -C "\$WORKSPACE"
     gatk --java-options "-Xmx${avail_mem}M -XX:+UseSerialGC -XX:-UsePerfData" \\
