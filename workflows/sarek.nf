@@ -564,7 +564,16 @@ workflow SAREK {
     known_sites_snps       = dbsnp.concat(known_snps).collect()
     known_sites_snps_tbi   = dbsnp_tbi.concat(known_snps_tbi).collect()
 
+    // Ultima Genomics DeepVariant resources
+    ug_model           = params.ug_model           ? Channel.fromPath(params.ug_model, checkIfExists: true).first()           : Channel.empty()
+    ug_dbsnp           = params.ug_dbsnp           ? Channel.fromPath(params.ug_dbsnp, checkIfExists: true).first()           : Channel.empty()
+    ug_exome_intervals = params.ug_exome_intervals ? Channel.fromPath(params.ug_exome_intervals, checkIfExists: true).first() : Channel.empty()
+    ug_lcr_bed         = params.ug_lcr_bed         ? Channel.fromPath(params.ug_lcr_bed, checkIfExists: true).first()         : Channel.empty()
+    ug_mappability_bed = params.ug_mappability_bed ? Channel.fromPath(params.ug_mappability_bed, checkIfExists: true).first() : Channel.empty()
+    ug_hmers_bed       = params.ug_hmers_bed       ? Channel.fromPath(params.ug_hmers_bed, checkIfExists: true).first()       : Channel.empty()
+
     // Build intervals if needed
+
     PREPARE_INTERVALS(fasta_fai, params.intervals, params.no_intervals)
 
     // Intervals for speed up preprocessing/variant calling by spread/gather
@@ -1166,10 +1175,17 @@ workflow SAREK {
             known_sites_snps,
             known_sites_snps_tbi,
             known_snps_vqsr,
-            params.input_map, 
+            params.input_map,
             params.joint_germline,
-            params.skip_tools && params.skip_tools.split(',').contains('haplotypecaller_filter'), // true if filtering should be skipped
-            params.sentieon_haplotyper_emit_mode)
+            params.skip_tools && params.skip_tools.split(',').contains('haplotypecaller_filter'),
+            params.sentieon_haplotyper_emit_mode,
+            ug_model,
+            ug_dbsnp,
+            ug_exome_intervals,
+            ug_lcr_bed,
+            ug_mappability_bed,
+            ug_hmers_bed
+        )
 
         // TUMOR ONLY VARIANT CALLING
         BAM_VARIANT_CALLING_TUMOR_ONLY_ALL(

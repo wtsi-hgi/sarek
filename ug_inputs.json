@@ -1,0 +1,25 @@
+{
+    "input": "ug_test_manifest.csv",
+    "outdir": "./results",
+    "joint_germline": false,
+    "step": "variant_calling",
+    "igenomes_base": "/lustre/scratch125/humgen/resources_v2/igenomes",
+    "tools": "ug_dv",
+    "nucleotides_per_second": 1000000,
+
+    "ug_model": "/lustre/scratch125/humgen/resources_v2/ultimagen/aws/ultimagen-workflow-resources-us-east-1/deepvariant/model/germline/wgs/custom/ultima-usb4-amp_pcrfree-germline_ibd-fine-tuned.onnx",
+
+    "ug_dbsnp": "/lustre/scratch125/humgen/resources_v2/ultimagen/aws/ultimagen-workflow-resources-us-east-1/hg38/v0/Homo_sapiens_assembly38.dbsnp138.vcf",
+
+    "ug_exome_intervals": "/lustre/scratch125/humgen/resources_v2/ultimagen/aws/ultimagen-workflow-resources-us-east-1/hg38/annotation_intervals/exome.twist.bed",
+
+    "ug_lcr_bed": "/lustre/scratch125/humgen/resources_v2/ultimagen/aws/ultimagen-workflow-resources-us-east-1/hg38/annotation_intervals/LCR-hs38.bed",
+
+    "ug_mappability_bed": "/lustre/scratch125/humgen/resources_v2/ultimagen/aws/ultimagen-workflow-resources-us-east-1/hg38/annotation_intervals/mappability.0.bed",
+
+    "ug_hmers_bed": "/lustre/scratch125/humgen/resources_v2/ultimagen/aws/ultimagen-workflow-resources-us-east-1/hg38/annotation_intervals/hmers_7_and_higher.bed",
+
+    "container_call_variants": "/software/hgi/containers/ultimagenomics/call_variants:2.2.4.sif",
+    "container_make_examples": "/software/hgi/containers/ultimagenomics/make_examples:3.0.2.sif",
+    "container_postprocess": "/software/hgi/containers/ultimagenomics/make_examples:3.0.2.sif"
+}

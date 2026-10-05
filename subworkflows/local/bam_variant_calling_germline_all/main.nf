@@ -6,6 +6,7 @@ include { BAM_JOINT_CALLING_GERMLINE_GATK         } from '../bam_joint_calling_g
 include { BAM_JOINT_CALLING_GERMLINE_SENTIEON     } from '../bam_joint_calling_germline_sentieon/main'
 include { BAM_VARIANT_CALLING_CNVKIT              } from '../bam_variant_calling_cnvkit/main'
 include { BAM_VARIANT_CALLING_DEEPVARIANT         } from '../bam_variant_calling_deepvariant/main'
+include { BAM_VARIANT_CALLING_UG_DV               } from '../bam_variant_calling_ug_dv/main'
 include { BAM_VARIANT_CALLING_FREEBAYES           } from '../bam_variant_calling_freebayes/main'
 include { BAM_VARIANT_CALLING_GERMLINE_MANTA      } from '../bam_variant_calling_germline_manta/main'
 include { BAM_VARIANT_CALLING_HAPLOTYPECALLER     } from '../bam_variant_calling_haplotypecaller/main'
@@ -42,6 +43,14 @@ workflow BAM_VARIANT_CALLING_GERMLINE_ALL {
     joint_germline                    // boolean: [mandatory] [default: false] joint calling of germline variants
     skip_haplotypecaller_filter       // boolean: [mandatory] [default: false] whether to filter haplotypecaller single sample vcfs
     sentieon_haplotyper_emit_mode     // channel: [mandatory] value channel with string
+    ug_model                          // channel: [mandatory] Ultima DeepVariant model
+
+    // Ultima Genomics DeepVariant resources
+    ug_dbsnp
+    ug_exome_intervals
+    ug_lcr_bed
+    ug_mappability_bed
+    ug_hmers_bed
 
     main:
     versions = Channel.empty()
@@ -94,6 +103,25 @@ workflow BAM_VARIANT_CALLING_GERMLINE_ALL {
 
         vcf_deepvariant = BAM_VARIANT_CALLING_DEEPVARIANT.out.vcf
         versions = versions.mix(BAM_VARIANT_CALLING_DEEPVARIANT.out.versions)
+    }
+    // ULTIMA_DEEPVARIANT
+    if (tools.split(',').contains('ug_dv')) {
+        BAM_VARIANT_CALLING_UG_DV(
+            cram,
+            //dict,
+            fasta,
+            fasta_fai,
+            intervals,
+            ug_model,  // This is normally in inputs.json
+            ug_dbsnp,
+            ug_exome_intervals,
+            ug_lcr_bed,
+            ug_mappability_bed,
+            ug_hmers_bed
+        )
+
+        vcf_deepvariant = BAM_VARIANT_CALLING_UG_DV.out.vcf
+        versions = versions.mix(BAM_VARIANT_CALLING_UG_DV.out.versions)
     }
 
     // FREEBAYES
