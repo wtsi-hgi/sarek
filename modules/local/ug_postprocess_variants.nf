@@ -52,7 +52,7 @@ process UG_POSTPROCESS_VARIANTS {
         | sed '1!d' \
         > flow_order.txt
 
-    echo "Flow order: $(cat flow_order.txt)"
+    echo "Flow order: \$(cat flow_order.txt)"
 
     echo 'Creating called-record list...'
 

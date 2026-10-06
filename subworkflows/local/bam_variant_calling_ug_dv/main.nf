@@ -72,8 +72,12 @@ workflow BAM_VARIANT_CALLING_UG_DV {
     ch_postprocess_in = UG_CALL_VARIANTS.out.call_output
         .join(ch_collected_gvcf_tf)
 
+   // Extract CRAM path from [meta, cram, crai]
+   ch_cram_file = cram.map { meta, cram, crai -> cram }
+
     UG_POSTPROCESS_VARIANTS (
         ch_postprocess_in,
+        ch_cram_file,
         fasta,
         fasta_fai,
         dbsnp,
