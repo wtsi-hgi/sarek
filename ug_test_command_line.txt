@@ -1,0 +1,1 @@
+nextflow -log test_UG_VC_01.log run main.nf -w ./work/ -profile singularity,sanger -params-file ug_inputs.json -name test_UG_VC_01 -resume
